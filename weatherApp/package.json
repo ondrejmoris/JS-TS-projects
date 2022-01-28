@@ -1,0 +1,19 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "Weather application",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ondřej Moris",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "prompt": "^1.2.1",
+    "undici": "^4.12.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}
