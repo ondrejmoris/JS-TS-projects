@@ -2,7 +2,7 @@
 
 Small JavaScript and TypeScript projects.
 
-# requirements
+# Requirements
 
 - Node.js
 - TypeScript
