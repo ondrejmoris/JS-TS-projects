@@ -22,11 +22,13 @@ async function createMe() {
 }
 
 async function main() {
-  await createMe();
+  // await createMe();
 
   const allUsers = await prisma.user.findMany();
+  const userCnt = await prisma.user.count();
 
   console.log(allUsers);
+  console.log(userCnt);
 }
 
 main()
