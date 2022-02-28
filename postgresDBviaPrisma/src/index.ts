@@ -5,16 +5,16 @@ const prisma = new PrismaClient();
 async function createMe() {
   await prisma.user.create({
     data: {
-      email: "moris.o@seznam.cz",
+      email: "mmmm@seznam.cz",
       firstName: "Ondřej",
       surname: "Moris",
       age: 23,
-      phoneNumber: 721590579,
+      phoneNumber: 123456789,
       address: {
         create: {
           city: "Mokré Lazce",
           street: "Malá Strana",
-          house_number: 58,
+          house_number: 555,
         },
       },
     },
