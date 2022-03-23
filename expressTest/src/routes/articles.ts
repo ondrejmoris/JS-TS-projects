@@ -15,18 +15,12 @@ router.get("/new", (req, res) => {
 router.post("/", async (req, res) => {
   const articleForm = {
     title: req.body.title,
-    description: req.body.description,
-    markdown: req.body.markdown,
+    description: req.body.description ? req.body.description : undefined,
+    markdown: req.body.markdown ? req.body.markdown : undefined,
   };
   try {
-    console.log(req.body.title);
-    console.log(typeof req.body.description);
     const articleDb = await prisma.article.create({
-      data: {
-        title: req.body.title,
-        description: req.body.description,
-        markdown: req.body.markdown,
-      },
+      data: articleForm,
     });
     res.redirect(`/articles/${articleDb.id}`);
   } catch (createError) {
