@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import express from "express";
 import path from "path";
+import methodOverride from "method-override";
 import prisma from "./instances";
 import { router as articlesRouter } from "./routes/articles";
 
@@ -20,22 +21,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
 app.use(express.urlencoded({ extended: false }));
-app.use("/articles", articlesRouter);
+app.use(methodOverride("_method"));
 
-app.get("/", (req, res) => {
-  const articless = [
-    {
-      title: "Article1",
-      createdAt: new Date(),
-      description: "This is test descrtipiton",
-    },
-    {
-      title: "Article2",
-      createdAt: new Date(),
-      description: "This is test descrtipiton 2",
-    },
-  ];
-  res.render("articles/index", { articles: articless });
+app.get("/", async (req, res) => {
+  const articles = await prisma.article.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+  res.render("articles/index", { articles });
 });
 
+app.use("/articles", articlesRouter);
 app.listen(5000);

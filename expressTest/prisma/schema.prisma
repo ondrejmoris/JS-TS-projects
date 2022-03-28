@@ -16,4 +16,5 @@ model Article {
   createdAt   DateTime @default(now())
   description String   @db.Text
   markdown    String   @db.Text
+  slug        String   @unique
 }
