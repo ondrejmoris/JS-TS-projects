@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  createdAt   DateTime @default(now())
-  description String   @db.Text
-  markdown    String   @db.Text
-  slug        String   @unique
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  createdAt     DateTime @default(now())
+  description   String   @db.Text
+  markdown      String   @db.Text
+  slug          String   @unique
+  sanitizedHtml String
 }

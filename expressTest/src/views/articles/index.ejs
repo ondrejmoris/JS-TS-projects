@@ -27,6 +27,9 @@
           <a href="articles/<%= article.slug %>" class="btn btn-primary"
             >Read more</a
           >
+          <a href="articles/edit/<%= article.id %>" class="btn btn-info"
+            >Edit</a
+          >
           <form
             action="/articles/<%= article.id %>?_method=DELETE"
             method="post"
