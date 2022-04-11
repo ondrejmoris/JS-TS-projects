@@ -4,14 +4,17 @@ import path from "path";
 import methodOverride from "method-override";
 import prisma from "./instances";
 import { router as articlesRouter } from "./routes/articles";
+import { router as managementRouter } from "./routes/management";
 
 const app = express();
 
 async function main() {
   // ... you will write your Prisma Client queries here
 
-  const allUsers = await prisma.article.findMany();
+  const allArticles = await prisma.article.findMany();
+  const allUsers = await prisma.users.findMany();
 
+  console.log(allArticles);
   console.log(allUsers);
 }
 
@@ -30,6 +33,7 @@ app.get("/", async (req, res) => {
   res.render("articles/index", { articles });
 });
 
+app.use("/management", managementRouter);
 app.use("/articles", articlesRouter);
 
 app.listen(5000);

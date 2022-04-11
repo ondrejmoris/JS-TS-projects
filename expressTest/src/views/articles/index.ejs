@@ -14,7 +14,18 @@
   <body>
     <div class="container">
       <h1>Articles</h1>
-      <a href="/articles/new" class="btn btn-success">Add article</a>
+      <div class="d-flex flex-row">
+        <div class="col-sm d-flex justify-content-start">
+          <a href="/articles/new" class="btn btn-success">Add article</a>
+        </div>
+
+        <div class="col-sm d-flex justify-content-end">
+          <a href="/management/register" class="btn btn-primary mr-1"
+            >Register</a
+          >
+          <a href="/management/login" class="btn btn-success d-inline">Login</a>
+        </div>
+      </div>
 
       <% articles.forEach(article => { %>
       <div class="card mt-4">
