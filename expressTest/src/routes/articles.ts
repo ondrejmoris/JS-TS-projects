@@ -1,16 +1,46 @@
 /* eslint-disable import/prefer-default-export */
 import express from "express";
+import jwt from "jsonwebtoken";
 import prisma from "../instances";
 
 export const router = express.Router();
 
-router.get("/new", (req, res) => {
+function authenticateToken(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  const accessToken = req.cookies.access_token;
+  const refreshToken = req.cookies.refresh_token;
+  if (!accessToken) {
+    // Send to frontend some message
+    res.redirect("/");
+  } else {
+    try {
+      const user = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET!);
+      req.body.user = user;
+      console.log(user);
+      next();
+    } catch (err) {
+      // Try to refresh token
+      if (!refreshToken) {
+        console.log("Dont have refresh token");
+        res.send("Not authorized to do this!");
+      } else {
+        console.log("Trying to refresh token");
+        res.redirect("/management/token");
+      }
+    }
+  }
+}
+
+router.get("/new", authenticateToken, (req, res) => {
   res.render("articles/new", {
     article: { title: undefined, description: undefined, markdown: undefined },
   });
 });
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", authenticateToken, async (req, res) => {
   const article = await prisma.article.findUnique({
     where: { id: Number.parseInt(req.params.id, 10) },
   });
@@ -49,7 +79,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   await prisma.article.delete({
     where: { id: Number.parseInt(req.params.id, 10) },
   });

@@ -21,7 +21,16 @@ model Article {
 }
 
 model Users {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  RefreshTokens RefreshTokens[]
+}
+
+model RefreshTokens {
+  id           Int      @id @default(autoincrement())
+  refreshToken String   @unique
+  expireAt     DateTime
+  userId       Users    @relation(fields: [usersId], references: [id])
+  usersId      Int
 }

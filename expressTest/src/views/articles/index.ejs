@@ -23,7 +23,14 @@
           <a href="/management/register" class="btn btn-primary mr-1"
             >Register</a
           >
-          <a href="/management/login" class="btn btn-success d-inline">Login</a>
+          <a href="/management/login" class="btn btn-success mr-1">Login</a>
+          <form
+            action="/management/logout?_method=DELETE"
+            method="post"
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-danger">Logout</button>
+          </form>
         </div>
       </div>
 
