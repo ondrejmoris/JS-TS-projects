@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  Id           Int            @id @default(autoincrement())
+  email        String         @unique
+  password     String
+  isCompany    Boolean
+  company      Company?       @relation(fields: [companyId], references: [Id])
+  companyId    Int?
+  RefreshToken RefreshToken[]
+}
+
+model Company {
+  Id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  User        User[]
+}
+
+model RefreshToken {
+  Id       Int      @id @default(autoincrement())
+  token    String   @unique
+  expireAt DateTime
+  user     User     @relation(fields: [userId], references: [Id])
+  userId   Int
+}
